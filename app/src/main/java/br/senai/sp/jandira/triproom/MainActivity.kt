@@ -105,18 +105,9 @@ fun TriproomScreen() {
                         modifier =Modifier.padding(top = 30.dp).width(360.dp),
                         shape = RoundedCornerShape(16.dp)
                     )
-
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        label ={ Text(
-                            text = stringResource(id = R.string.password)
-                        )},
-                        modifier =Modifier.padding(top = 30.dp).width(360.dp),
-                        shape = RoundedCornerShape(16.dp)
-                    )
                 }
             }
+
         }
 
     }
