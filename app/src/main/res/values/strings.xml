@@ -15,5 +15,6 @@
     <string name="already_have_an_account">Already have an account? Sign in</string>
     <string name="sing_in2">Sign in</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_my_trips">MyTripsActivity</string>
 
 </resources>
