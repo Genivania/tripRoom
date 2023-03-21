@@ -14,5 +14,6 @@
     <string name="create_account">CREATE ACCOUNT</string>
     <string name="already_have_an_account">Already have an account? Sign in</string>
     <string name="sing_in2">Sign in</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 
 </resources>
