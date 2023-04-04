@@ -30,13 +30,31 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.triproom.R
 import br.senai.sp.jandira.triproom.componentes.BottomShape
 import br.senai.sp.jandira.triproom.componentes.TopShape
+import br.senai.sp.jandira.triproom.model.User
+import br.senai.sp.jandira.triproom.repository.UserRepository
 import br.senai.sp.jandira.triproom.ui.theme.TriproomTheme
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val user = User(
+            userName = "Maria da Silva",
+            email = "maria@terra.com.br",
+            password = "123456",
+            phone = "(11)99999-9999",
+            isOver18 = true
+        )
+
+        val userRep =UserRepository(this)
+        userRep.save(user)
+
         setContent {
             TriproomTheme {
+                Surface(modifier = Modifier.fillMaxWidth()
+                ) {
+
+                }
                 SignUpScreen()
             }
         }
