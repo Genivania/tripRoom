@@ -18,6 +18,6 @@ interface UserDao {
     @Query("SELECT * FROM tbl_user WHERE email = :email AND password = :pass")
     fun authenticate(email: String, pass: String)
 
-    @Query("SELECT * FROM tbl_user WHERE email = :email")
+    @Query("SELECT * FROM tbl_user WHERE email = :email ")
     fun findUserByEmail (email: String)
 }
