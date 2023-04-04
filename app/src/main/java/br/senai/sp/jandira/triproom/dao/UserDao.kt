@@ -16,8 +16,8 @@ interface UserDao {
     fun delete(user: User): Int
 
     @Query("SELECT * FROM tbl_user WHERE email = :email AND password = :pass")
-    fun authenticate(email: String, pass: String)
+    fun authenticate(email: String, pass: String): User
 
     @Query("SELECT * FROM tbl_user WHERE email = :email ")
-    fun findUserByEmail (email: String)
+    fun findUserByEmail (email: String): User
 }
