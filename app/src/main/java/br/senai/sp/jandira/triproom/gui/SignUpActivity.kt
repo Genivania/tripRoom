@@ -2,6 +2,7 @@ package br.senai.sp.jandira.triproom.gui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -47,7 +48,13 @@ class SignUpActivity : ComponentActivity() {
         )
 
         val userRep =UserRepository(this)
-        userRep.save(user)
+        var id = userRep.save(user)
+
+        Toast.makeText(
+            this,
+            "$id",
+            Toast.LENGTH_LONG)
+            .show()
 
         setContent {
             TriproomTheme {
