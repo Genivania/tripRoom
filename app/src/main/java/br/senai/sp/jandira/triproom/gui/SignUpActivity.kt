@@ -2,6 +2,7 @@ package br.senai.sp.jandira.triproom.gui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -53,6 +54,10 @@ class SignUpActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun SignUpScreen() {
+
+    var photUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
 
     var userNameState by remember {
         mutableStateOf("")
