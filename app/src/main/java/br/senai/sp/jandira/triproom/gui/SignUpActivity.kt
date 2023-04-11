@@ -42,14 +42,8 @@ class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContent {
             TriproomTheme {
-                Surface(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                }
                 SignUpScreen()
             }
         }
@@ -373,7 +367,7 @@ fun saveUser(
             Toast.LENGTH_LONG
         ).show()
     } else {
-        val id = userRepository.save(newUser)
+
         Toast.makeText(
             context,
             "User already exists!",
