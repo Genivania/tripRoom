@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.triproom.gui
 
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -7,12 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-//import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,7 +40,8 @@ import br.senai.sp.jandira.triproom.componentes.TopShape
 import br.senai.sp.jandira.triproom.model.User
 import br.senai.sp.jandira.triproom.repository.UserRepository
 import br.senai.sp.jandira.triproom.ui.theme.TriproomTheme
-import kotlin.math.log
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +62,18 @@ fun SignUpScreen() {
     var photUri by remember {
         mutableStateOf<Uri?>(null)
     }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        photUri = uri
+    }
+
+    var painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current)
+            .data(photUri)
+            .build()
+    )
 
     var userNameState by remember {
         mutableStateOf("")
@@ -122,10 +138,9 @@ fun SignUpScreen() {
                     )
                     {
                         Image(
-                            painter = painterResource(
-                                id = R.drawable.profile
-                            ),
-                            contentDescription = null
+                            painter = if(photUri == null) painterResource(id = R.drawable.profile) else painter,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
                         )
 
                     }
@@ -134,9 +149,18 @@ fun SignUpScreen() {
                             id = R.drawable.baseline_add_a_photo_24
                         ),
                         contentDescription = null,
-                        modifier = Modifier.align(Alignment.BottomEnd)
-                    )
-                }
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .clickable {
+                                launcher.launch("image/*")
+                                var message = "nada"
+                                Log.i(
+                                    "ds2m",
+                                    " ${photUri?.path ?: message} "
+                                )
+                            }
+                        )
+                    }
             }
 
             Column(
@@ -260,7 +284,7 @@ fun SignUpScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Checkbox(checked = overState, onCheckedChange = {overState = it})
+                Checkbox(checked = overState, onCheckedChange = { overState = it })
                 Text(text = stringResource(id = R.string.over_18))
             }
 
@@ -280,6 +304,7 @@ fun SignUpScreen() {
                             emailState,
                             passwordState,
                             overState,
+                            profilePhoto = photUri!!.path ?: "",
                             context
                         )
                     },
@@ -332,7 +357,6 @@ fun SignUpScreen() {
     }// surface
 
 
-
 }// SignUpScreen()
 
 fun saveUser(
@@ -341,6 +365,7 @@ fun saveUser(
     email: String,
     password: String,
     isOver18: Boolean,
+    profilePhoto: String,
     context: Context
 ) {
 
@@ -350,7 +375,8 @@ fun saveUser(
         phone = phone,
         email = email,
         password = password,
-        isOver18 = isOver18
+        isOver18 = isOver18,
+        profilePhoto = profilePhoto
     )
 
     //Criando uma instancia do repositorio
@@ -364,7 +390,7 @@ fun saveUser(
     )
 
     //Salvar o usuário
-    if( user == null){
+    if (user == null) {
         val id = userRepository.save(newUser)
         Toast.makeText(
             context,

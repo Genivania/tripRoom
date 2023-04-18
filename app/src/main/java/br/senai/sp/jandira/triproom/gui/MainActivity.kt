@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.R
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -215,11 +214,14 @@ fun authenticateUser(
 
     if (user != null){
         Toast.makeText(context, "User alredy exists", Toast.LENGTH_LONG).show()
-        val intent = Intent(context, MyTripsActivity::class.java)
-        context.startActivity(intent)
+
     }else{
-        Toast.makeText(context, "Not exists", Toast.LENGTH_LONG).show()
+        val intent = Intent(
+            context,
+            MyTripsActivity::class.java
+        )
+        intent.putExtra("id", user.id)
+        intent.putExtra("name", user.userName)
+        context.startActivity(intent)
     }
-
-
 }

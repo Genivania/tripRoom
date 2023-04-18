@@ -20,4 +20,6 @@ interface UserDao {
 
     @Query("SELECT * FROM tbl_user WHERE email = :email ")
     fun findUserByEmail (email: String): User
+
+
 }
