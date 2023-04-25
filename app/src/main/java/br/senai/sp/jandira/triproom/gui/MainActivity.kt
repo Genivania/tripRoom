@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.triproom.componentes.BottomShape
 import br.senai.sp.jandira.triproom.componentes.TopShape
+import br.senai.sp.jandira.triproom.repository.CategoryRepository
 import br.senai.sp.jandira.triproom.repository.UserRepository
 import br.senai.sp.jandira.triproom.ui.theme.TriproomTheme
 
@@ -34,7 +35,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TriproomTheme {
-                TripRoomScreen()
+                HomeScreen(CategoryRepository.getCategories())
+
             }
         }
     }
@@ -218,7 +220,7 @@ fun authenticateUser(
     }else{
         val intent = Intent(
             context,
-            MyTripsActivity::class.java
+            HomeActivity::class.java
         )
         intent.putExtra("id", user.id)
         intent.putExtra("name", user.userName)

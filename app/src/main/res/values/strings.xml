@@ -16,5 +16,13 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_my_trips">MyTripsActivity</string>
+    <string name="You_re_in_Paris">You\'re in Paris</string>
+    <string name="My_Trips">My Trips</string>
+    <string name="montain">Montain</string>
+    <string name="snow">Snow</string>
+    <string name="searchYourDestinity">Search your destinity</string>
+    <string name="categories">Categories</string>
+
+
 
 </resources>

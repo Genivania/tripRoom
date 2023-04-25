@@ -38,6 +38,7 @@ import br.senai.sp.jandira.triproom.R
 import br.senai.sp.jandira.triproom.componentes.BottomShape
 import br.senai.sp.jandira.triproom.componentes.TopShape
 import br.senai.sp.jandira.triproom.model.User
+import br.senai.sp.jandira.triproom.repository.CategoryRepository
 import br.senai.sp.jandira.triproom.repository.UserRepository
 import br.senai.sp.jandira.triproom.ui.theme.TriproomTheme
 import coil.compose.rememberAsyncImagePainter
@@ -49,7 +50,7 @@ class SignUpActivity : ComponentActivity() {
 
         setContent {
             TriproomTheme {
-                SignUpScreen()
+                HomeScreen(CategoryRepository.getCategories())
             }
         }
     }
