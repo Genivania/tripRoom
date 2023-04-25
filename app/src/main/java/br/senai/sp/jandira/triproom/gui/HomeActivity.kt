@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,11 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.triproom.R
 import br.senai.sp.jandira.triproom.model.Category
+import br.senai.sp.jandira.triproom.model.Trip
 import br.senai.sp.jandira.triproom.repository.CategoryRepository
+import br.senai.sp.jandira.triproom.repository.TripRepository
 import br.senai.sp.jandira.triproom.ui.theme.TriproomTheme
 
 class HomeActivity : AppCompatActivity() {
@@ -31,7 +35,9 @@ class HomeActivity : AppCompatActivity() {
         setContent {
             TriproomTheme {
                 Surface() {
-                    HomeScreen(CategoryRepository.getCategories())
+                    HomeScreen(CategoryRepository.getCategories(),
+                        TripRepository.getTrips()
+                    )
                 }
             }
         }
@@ -41,7 +47,10 @@ class HomeActivity : AppCompatActivity() {
 //@Preview(showBackground = true, showSystemUi = true )
 @Composable
 
-fun HomeScreen(categories: List<Category>) {
+fun HomeScreen(
+    categories: List<Category>,
+    trip: List<Trip>
+) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Card(
@@ -105,6 +114,51 @@ fun HomeScreen(categories: List<Category>) {
                 }
             }
         )
+        Text(text = stringResource(id = R.string.pastTrips),
+                fontSize = 15.sp,
+            color = Color(86,84,84),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+            )
+        LazyColumn(){
+            items(trip){
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                ) {
+                    Column(modifier = Modifier.padding(8.dp)) {
+                        Image(
+                            painter = painterResource(id = R.drawable.no_photography_24),
+                            contentDescription = ""
+                        )
+                        Text(text = "${it.location}, ${it.startDate}")
+                        Text(text = "${it.description}")
+                        Text(
+                            text = "${it.startDate} - ${it.endDate}",
+                            textAlign = TextAlign.End,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+            }
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
